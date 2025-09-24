@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserType {
+  poster
+  seller
+  root
+}
+
+enum RequestStatus {
+  success
+  queued
+  rejected_cooldown
+  rejected_limit
+  rejected_empty
+}
+
+enum NotificationType {
+  POST_DELETION
+  ADMIN_ANNOUNCEMENT
+  SYSTEM
+  OTHER
+}
+
+model SellerQueue {
+  id        String   @id @default(cuid())
+  sellerId  String   @unique
+  createdAt DateTime @default(now())
+
+  seller User @relation(fields: [sellerId], references: [id])
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  userName  String   @unique
+  password  String
+  isActive  Boolean  @default(true)
+  type      UserType
+  createdAt DateTime @default(now())
+
+  posts        Post[]             @relation("PosterPosts")
+  claims       Claim[]            @relation("SellerClaims")
+  limitProfile SellerLimit?       @relation("UserLimit")
+  requestLogs  SellerRequestLog[] @relation("UserLogs")
+
+  sellerQueues  SellerQueue[]
+  postDeletions PostDeletion[]
+  notifications Notification[] @relation("UserNotifications")
+}
+
+model Post {
+  id         String   @id @default(cuid())
+  phone      String   @unique
+  message    String
+  clientName String
+  createdAt  DateTime @default(now())
+  posterId   String
+  claimed    Boolean  @default(false)
+  new        Boolean  @default(true)
+  deleted    Boolean  @default(false)
+
+  poster    User           @relation("PosterPosts", fields: [posterId], references: [id])
+  claim     Claim?
+  deletions PostDeletion[]
+}
+
+model Claim {
+  id        String   @id @default(cuid())
+  postId    String   @unique
+  sellerId  String
+  claimedAt DateTime @default(now())
+
+  post   Post @relation(fields: [postId], references: [id])
+  seller User @relation("SellerClaims", fields: [sellerId], references: [id])
+}
+
+model PostDeletion {
+  id        String   @id @default(cuid())
+  reason    String
+  createdAt DateTime @default(now())
+  seller    User     @relation(fields: [sellerId], references: [id])
+  sellerId  String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+}
+
+model SellerLimit {
+  id            String    @id @default(cuid())
+  sellerId      String    @unique
+  dailyLimit    Int       @default(50)
+  cooldownSecs  Int       @default(60)
+  usageCount    Int       @default(0)
+  lastRequestAt DateTime?
+
+  seller User @relation("UserLimit", fields: [sellerId], references: [id])
+}
+
+model SellerRequestLog {
+  id        String        @id @default(cuid())
+  sellerId  String
+  createdAt DateTime      @default(now())
+  outcome   RequestStatus
+
+  seller User @relation("UserLogs", fields: [sellerId], references: [id])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String? // null = global announcement
+  type      NotificationType @default(OTHER)
+  message   String
+  metadata  Json? // optional extra data (e.g. { postId: "...", reason: "..." })
+  createdAt DateTime         @default(now())
+  read      Boolean          @default(false)
+
+  user User? @relation("UserNotifications", fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
+  @@index([createdAt])
+}
