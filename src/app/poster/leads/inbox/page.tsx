@@ -161,18 +161,21 @@ const page = () => {
                     </Link>
                   </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Client Name
-                  </p>
-                  <p className="text-lg">{selectedPost?.clientName}</p>
+                <div className="flex justify-between gap-2">
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Client Name
+                    </p>
+                    <p className="text-lg">{selectedPost?.clientName}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Agent Name
+                    </p>
+                    <p className="text-lg">{selectedPost?.agentName}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Agent Name
-                  </p>
-                  <p className="text-lg">{selectedPost?.agentName}</p>
-                </div>
+
                 <div>
                   <p className="text-sm font-medium text-gray-500">Location</p>
                   <p className="text-lg">{selectedPost?.location}</p>
