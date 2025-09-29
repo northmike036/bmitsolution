@@ -48,6 +48,10 @@ export async function GET(req: Request) {
       message: lead.message,
       createdAt: lead.createdAt,
       clientName: lead.clientName,
+      agentName: lead.agentName,
+      location: lead.location,
+      rent: lead.rent,
+      screenshot: lead.screenshot,
     }));
 
     return NextResponse.json(formatted);

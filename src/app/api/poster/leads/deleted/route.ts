@@ -45,6 +45,10 @@ export async function GET(req: Request) {
               phone: true,
               message: true,
               clientName: true,
+              agentName: true,
+              location: true,
+              rent: true,
+              screenshot: true,
               poster: {
                 select: {
                   id: true,

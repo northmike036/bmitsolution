@@ -45,8 +45,12 @@ export async function GET(req: Request) {
           select: {
             id: true,
             phone: true,
-            message: true,
             clientName: true,
+            agentName: true,
+            message: true,
+            location: true,
+            screenshot: true,
+            rent: true,
             poster: {
               select: {
                 id: true,
