@@ -77,6 +77,15 @@ export default function LeadForm() {
       <h2 className="mb-6 text-center text-xl font-semibold">Submit Lead</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
+          type="tel"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          placeholder="Phone Number"
+          value={form.phoneNumber}
+          onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
+          required
+        />
+        <Input
           type="text"
           placeholder="Client Name"
           value={form.clientName}
@@ -90,15 +99,7 @@ export default function LeadForm() {
           onChange={(e) => setForm({ ...form, agentName: e.target.value })}
           required
         />
-        <Input
-          type="tel"
-          inputMode="numeric"
-          pattern="[0-9]*"
-          placeholder="Phone Number"
-          value={form.phoneNumber}
-          onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
-          required
-        />
+
         <Input
           type="text"
           placeholder="Location"
