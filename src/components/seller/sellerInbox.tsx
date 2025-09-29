@@ -27,6 +27,10 @@ type Post = {
   phone: string;
   message: string;
   clientName: string;
+  agentName: string;
+  location: string;
+  rent: string;
+  screenshot: string;
   claimedAt: string;
   createdAt: string;
   poster: string;
@@ -76,7 +80,7 @@ const SellerInboxV2 = () => {
   const fetchSearchClaims = async (query: string) => {
     try {
       const res = await fetch(
-        `/api/seller/claims/search?phone=${encodeURIComponent(query)}`
+        `/api/seller/claims/search?phone=${encodeURIComponent(query)}`,
       );
       const data = await res.json();
       setPosts(Array.isArray(data) ? data : []);
@@ -221,7 +225,7 @@ const SellerInboxV2 = () => {
 
   // --- UI ---
   return (
-    <div className="space-y-6 max-w-3xl mx-auto p-4">
+    <div className="mx-auto max-w-3xl space-y-6 p-4">
       {/* Request Button */}
       {timeInterval ? (
         <Button
@@ -232,8 +236,8 @@ const SellerInboxV2 = () => {
           {loading
             ? "Requesting..."
             : cooldown > 0
-            ? `Cooldown: ${cooldown}s`
-            : "Request Lead"}
+              ? `Cooldown: ${cooldown}s`
+              : "Request Lead"}
         </Button>
       ) : (
         <div>Loading...</div>
@@ -257,21 +261,21 @@ const SellerInboxV2 = () => {
                   setSelectedPost(post);
                   if (post.new) handleNew(post.id);
                 }}
-                className="cursor-pointer hover:shadow-md transition py-2"
+                className="cursor-pointer py-2 transition hover:shadow-md"
               >
-                <CardContent className="px-4 py-2 space-y-1">
-                  <div className="flex justify-between items-center">
+                <CardContent className="space-y-1 px-4 py-2">
+                  <div className="flex items-center justify-between">
                     <p className="text-sm text-gray-600">Phone: {post.phone}</p>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex items-center gap-2">
                       <p>{new Date(post.createdAt).toLocaleString()}</p>
                       {post.new && (
-                        <p className="bg-emerald-600 rounded-full px-2 text-sm text-white">
+                        <p className="rounded-full bg-emerald-600 px-2 text-sm text-white">
                           New
                         </p>
                       )}
                     </div>
                   </div>
-                  <p className="text-gray-800 line-clamp-2">{post.message}</p>
+                  <p className="line-clamp-2 text-gray-800">{post.message}</p>
                 </CardContent>
               </Card>
             </DialogTrigger>
@@ -281,12 +285,12 @@ const SellerInboxV2 = () => {
               <DialogHeader>
                 <DialogTitle>Post Details</DialogTitle>
               </DialogHeader>
-              <div className="space-y-4 mt-2">
+              <div className="mt-2 space-y-4">
                 <div>
                   <p className="text-sm font-medium text-gray-500">
                     Phone Number
                   </p>
-                  <div className="flex justify-between items-center gap-3">
+                  <div className="flex items-center justify-between gap-3">
                     <p className="text-lg">{selectedPost?.phone}</p>
                     {selectedPost?.phone && (
                       <CopyButton
@@ -296,25 +300,49 @@ const SellerInboxV2 = () => {
                     )}
                   </div>
                 </div>
+                <div className="flex justify-between gap-2">
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Client Name
+                    </p>
+                    <p className="text-lg">{selectedPost?.clientName}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Agent Name
+                    </p>
+                    <p className="text-lg">{selectedPost?.agentName}</p>
+                  </div>
+                </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Name</p>
-                  <p className="text-lg">{selectedPost?.clientName}</p>
+                  <p className="text-sm font-medium text-gray-500">Location</p>
+                  <p className="text-lg">{selectedPost?.location}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">Rent</p>
+                  <p className="text-lg">{selectedPost?.rent}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    Screenshot
+                  </p>
+                  <p className="text-lg">{selectedPost?.screenshot}</p>
                 </div>
                 <Collapsible>
                   <CollapsibleTrigger
-                    className="text-sm font-medium text-gray-500 w-full flex justify-between items-center"
+                    className="flex w-full items-center justify-between text-sm font-medium text-gray-500"
                     onClick={() => setOpen(!open)}
                   >
                     <p>Message</p>
                     <p>
                       {open ? (
-                        <ChevronUp className="w-4 h-4" />
+                        <ChevronUp className="h-4 w-4" />
                       ) : (
-                        <ChevronDown className="w-4 h-4" />
+                        <ChevronDown className="h-4 w-4" />
                       )}
                     </p>
                   </CollapsibleTrigger>
-                  <CollapsibleContent className="whitespace-pre-wrap break-words break-all">
+                  <CollapsibleContent className="break-words break-all whitespace-pre-wrap">
                     {selectedPost?.message}
                   </CollapsibleContent>
                 </Collapsible>
@@ -381,7 +409,7 @@ const SellerInboxV2 = () => {
 
         {/* Empty State */}
         {posts.length === 0 && (
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-center text-sm">
             {search.trim()
               ? "No results for that phone number."
               : "No claimed posts yet."}

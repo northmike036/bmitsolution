@@ -38,6 +38,10 @@ export async function GET(req: Request) {
             phone: true,
             message: true,
             clientName: true,
+            agentName: true,
+            location: true,
+            rent: true,
+            screenshot: true,
             createdAt: true,
             poster: {
               select: {
@@ -55,6 +59,10 @@ export async function GET(req: Request) {
       message: claim.post.message,
       createdAt: claim.post.createdAt,
       clientName: claim.post.clientName,
+      agentName: claim.post.agentName,
+      location: claim.post.location,
+      rent: claim.post.rent,
+      screenshot: claim.post.screenshot,
       claimedAt: claim.claimedAt,
       poster: claim.post.poster.name,
     }));
@@ -64,7 +72,7 @@ export async function GET(req: Request) {
     console.error("[SELLER_CLAIMS_SEARCH]", err);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

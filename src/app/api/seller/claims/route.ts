@@ -8,8 +8,8 @@ import { NextResponse } from "next/server";
 function safeJson(obj: any) {
   return JSON.parse(
     JSON.stringify(obj, (_, value) =>
-      typeof value === "bigint" ? Number(value) : value
-    )
+      typeof value === "bigint" ? Number(value) : value,
+    ),
   );
 }
 
@@ -42,6 +42,10 @@ export async function GET(req: Request) {
             phone: true,
             message: true,
             clientName: true,
+            agentName: true,
+            location: true,
+            rent: true,
+            screenshot: true,
             createdAt: true,
             new: true,
             poster: {
@@ -65,6 +69,10 @@ export async function GET(req: Request) {
       createdAt: claim.post.createdAt,
       poster: claim.post.poster.name,
       clientName: claim.post.clientName,
+      agentName: claim.post.agentName,
+      location: claim.post.location,
+      rent: claim.post.rent,
+      screenshot: claim.post.screenshot,
       claimedAt: claim.claimedAt,
       new: claim.post.new,
     }));
@@ -78,13 +86,13 @@ export async function GET(req: Request) {
           totalPages: Math.ceil(totalClaims / limit),
           totalClaims,
         },
-      })
+      }),
     );
   } catch (err) {
     console.error("[SELLER_CLAIMS]", err);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
