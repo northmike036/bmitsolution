@@ -9,7 +9,9 @@ export default async function PosterPage() {
     redirect("/login");
   }
 
-  return <div>
-    <SellerSummary />
-  </div>;
+  return (
+    <div>
+      <SellerSummary />
+    </div>
+  );
 }

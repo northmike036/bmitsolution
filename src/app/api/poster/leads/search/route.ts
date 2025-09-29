@@ -33,6 +33,10 @@ export async function GET(req: Request) {
         id: true,
         phone: true,
         message: true,
+        agentName: true,
+        location: true,
+        rent: true,
+        screenshot: true,
         clientName: true,
         createdAt: true,
       },
@@ -51,7 +55,7 @@ export async function GET(req: Request) {
     console.error("[SELLER_CLAIMS_SEARCH]", err);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

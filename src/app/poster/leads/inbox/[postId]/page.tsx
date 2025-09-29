@@ -17,6 +17,10 @@ const page = async ({ params }: { params: Promise<PageProps> }) => {
       phoneNumber={cleanedNumber}
       message={lead.message}
       clientName={lead.clientName}
+      agentName={lead.agentName}
+      location={lead.location}
+      rent={lead.rent}
+      screenshot={lead.screenshot}
       id={postId}
     />
   );

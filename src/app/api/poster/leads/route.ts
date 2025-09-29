@@ -40,6 +40,10 @@ export async function GET(req: Request) {
         message: true,
         clientName: true,
         createdAt: true,
+        agentName: true,
+        location: true,
+        rent: true,
+        screenshot: true,
         new: true,
       },
     });

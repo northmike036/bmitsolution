@@ -10,11 +10,19 @@ export default function UpdateForm({
   phoneNumber,
   message,
   clientName,
+  agentName,
+  location,
+  rent,
+  screenshot,
   id,
 }: {
   phoneNumber: string;
   message: string;
   clientName: string;
+  agentName: string;
+  location: string;
+  rent: string;
+  screenshot: string;
   id: string;
 }) {
   const { toast } = useToast();
@@ -22,6 +30,10 @@ export default function UpdateForm({
     phoneNumber,
     message,
     clientName,
+    agentName,
+    location,
+    rent,
+    screenshot,
   });
   const [loading, setLoading] = useState(false);
 
@@ -39,6 +51,10 @@ export default function UpdateForm({
           phoneNumber: form.phoneNumber.trim(),
           message: form.message.trim(),
           clientName: form.clientName.trim(),
+          agentName: form.agentName.trim(),
+          location: form.location.trim(),
+          rent: form.rent.trim(),
+          screenshot: form.screenshot.trim(),
           postId: id,
         }),
       });
@@ -54,7 +70,15 @@ export default function UpdateForm({
         description: "Lead Update Successfully!",
       });
 
-      setForm({ phoneNumber: "", message: "", clientName: "" });
+      setForm({
+        phoneNumber: "",
+        message: "",
+        clientName: "",
+        agentName: "",
+        location: "",
+        rent: "",
+        screenshot: "",
+      });
     } catch (error: any) {
       toast({
         title: "Submission failed",
@@ -78,12 +102,40 @@ export default function UpdateForm({
           required
         />
         <Input
+          type="text"
+          placeholder="Agent Name"
+          value={form.agentName}
+          onChange={(e) => setForm({ ...form, agentName: e.target.value })}
+          required
+        />
+        <Input
           type="tel"
           inputMode="numeric"
           pattern="[0-9]*"
           placeholder="Phone Number"
           value={form.phoneNumber}
           onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
+          required
+        />
+        <Input
+          type="text"
+          placeholder="Location"
+          value={form.location}
+          onChange={(e) => setForm({ ...form, location: e.target.value })}
+          required
+        />
+        <Input
+          type="text"
+          placeholder="Rent"
+          value={form.rent}
+          onChange={(e) => setForm({ ...form, rent: e.target.value })}
+          required
+        />
+        <Input
+          type="text"
+          placeholder="Screenshot"
+          value={form.screenshot}
+          onChange={(e) => setForm({ ...form, screenshot: e.target.value })}
           required
         />
         <Textarea

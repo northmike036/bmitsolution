@@ -19,6 +19,10 @@ type Post = {
   id: string;
   phone: string;
   message: string;
+  agentName: string;
+  location: string;
+  rent: string;
+  screenshot: string;
   clientName: string;
   createdAt: string;
   claimedAt: string;
@@ -158,8 +162,30 @@ const page = () => {
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Name</p>
+                  <p className="text-sm font-medium text-gray-500">
+                    Client Name
+                  </p>
                   <p className="text-lg">{selectedPost?.clientName}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    Agent Name
+                  </p>
+                  <p className="text-lg">{selectedPost?.agentName}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">Location</p>
+                  <p className="text-lg">{selectedPost?.location}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">Rent</p>
+                  <p className="text-lg">{selectedPost?.rent}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    Screenshot
+                  </p>
+                  <p className="text-lg">{selectedPost?.screenshot}</p>
                 </div>
                 <DisplayMessage
                   type="Details"
