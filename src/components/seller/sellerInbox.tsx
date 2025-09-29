@@ -333,7 +333,7 @@ const SellerInboxV2 = () => {
                     className="flex w-full items-center justify-between text-sm font-medium text-gray-500"
                     onClick={() => setOpen(!open)}
                   >
-                    <p>Message</p>
+                    <p>Description</p>
                     <p>
                       {open ? (
                         <ChevronUp className="h-4 w-4" />

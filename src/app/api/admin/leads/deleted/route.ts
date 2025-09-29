@@ -8,8 +8,8 @@ import { authOptions } from "@/lib/auth";
 function safeJson(obj: any) {
   return JSON.parse(
     JSON.stringify(obj, (_, value) =>
-      typeof value === "bigint" ? Number(value) : value
-    )
+      typeof value === "bigint" ? Number(value) : value,
+    ),
   );
 }
 
@@ -39,6 +39,10 @@ export async function GET(req: Request) {
             id: true,
             phone: true,
             message: true,
+            agentName: true,
+            location: true,
+            rent: true,
+            screenshot: true,
             clientName: true,
             poster: {
               select: {
@@ -68,13 +72,13 @@ export async function GET(req: Request) {
           limit,
           totalPages: Math.ceil(total / limit),
         },
-      })
+      }),
     );
   } catch (error) {
     console.error("Error fetching deleted posts:", error);
     return NextResponse.json(
       { error: "Failed to fetch deleted posts" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
