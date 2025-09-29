@@ -13,6 +13,10 @@ export default function LeadForm() {
     phoneNumber: "",
     message: "",
     clientName: "",
+    agentName: "",
+    location: "",
+    rent: "",
+    screenshot: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -30,6 +34,10 @@ export default function LeadForm() {
           phoneNumber: form.phoneNumber.trim(),
           message: form.message.trim(),
           clientName: form.clientName.trim(),
+          agentName: form.agentName.trim(),
+          location: form.location.trim(),
+          rent: form.rent.trim(),
+          screenshot: form.screenshot.trim(),
         }),
       });
 
@@ -44,7 +52,15 @@ export default function LeadForm() {
         description: "Lead Added Successfully!",
       });
 
-      setForm({ phoneNumber: "", message: "", clientName: "" });
+      setForm({
+        phoneNumber: "",
+        message: "",
+        clientName: "",
+        agentName: "",
+        location: "",
+        rent: "",
+        screenshot: "",
+      });
     } catch (error: any) {
       toast({
         title: "Submission failed",
@@ -57,14 +73,21 @@ export default function LeadForm() {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-white shadow-md p-6 rounded-lg">
-      <h2 className="text-xl font-semibold mb-6 text-center">Submit Lead</h2>
+    <div className="mx-auto max-w-xl rounded-lg bg-white p-6 shadow-md">
+      <h2 className="mb-6 text-center text-xl font-semibold">Submit Lead</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           type="text"
           placeholder="Client Name"
           value={form.clientName}
           onChange={(e) => setForm({ ...form, clientName: e.target.value })}
+          required
+        />
+        <Input
+          type="text"
+          placeholder="Agent Name"
+          value={form.agentName}
+          onChange={(e) => setForm({ ...form, agentName: e.target.value })}
           required
         />
         <Input
@@ -76,8 +99,29 @@ export default function LeadForm() {
           onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
           required
         />
+        <Input
+          type="text"
+          placeholder="Location"
+          value={form.location}
+          onChange={(e) => setForm({ ...form, location: e.target.value })}
+          required
+        />
+        <Input
+          type="text"
+          placeholder="Rent"
+          value={form.rent}
+          onChange={(e) => setForm({ ...form, rent: e.target.value })}
+          required
+        />
+        <Input
+          type="text"
+          placeholder="Screenshot"
+          value={form.screenshot}
+          onChange={(e) => setForm({ ...form, screenshot: e.target.value })}
+          required
+        />
         <Textarea
-          placeholder="Message"
+          placeholder="Description"
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
           required

@@ -61,6 +61,10 @@ model Post {
   phone      String   @unique
   message    String
   clientName String
+  agentName  String
+  location   String
+  rent       String
+  screenshot String
   createdAt  DateTime @default(now())
   posterId   String
   claimed    Boolean  @default(false)
