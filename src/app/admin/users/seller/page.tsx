@@ -34,6 +34,7 @@ type Seller = {
   dailyClaims: number;
   yesterdayClaims: number;
   weeklyClaims: number;
+  lastMonthClaims: number;
   monthlyClaims: number;
   _count: {
     claims: number;
@@ -93,7 +94,7 @@ export default function AdminSellerListPage() {
 
   if (loading) {
     return (
-      <div className="space-y-4 mx-auto p-4">
+      <div className="mx-auto space-y-4 p-4">
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold">All Sellers</h2>
           <div className="space-x-3">
@@ -108,7 +109,7 @@ export default function AdminSellerListPage() {
                   <DialogTitle>Change Seller Limit</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleLimitChange}>
-                  <div className="space-y-2 mb-2">
+                  <div className="mb-2 space-y-2">
                     <Label>Daily Limit</Label>
                     <Input
                       value={dailyLimit}
@@ -136,7 +137,7 @@ export default function AdminSellerListPage() {
             </Dialog>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {Array.from({ length: 15 }).map((_, i) => (
             <Skeleton key={i} className="h-50 w-full rounded-xl bg-gray-300" />
           ))}
@@ -146,7 +147,7 @@ export default function AdminSellerListPage() {
   }
 
   return (
-    <div className="space-y-4 mx-auto p-4">
+    <div className="mx-auto space-y-4 p-4">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold">All Sellers</h2>
         <div className="space-x-3">
@@ -161,7 +162,7 @@ export default function AdminSellerListPage() {
                 <DialogTitle>Change Seller Limit</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleLimitChange}>
-                <div className="space-y-2 mb-2">
+                <div className="mb-2 space-y-2">
                   <Label>Daily Limit</Label>
                   <Input
                     value={dailyLimit}
@@ -189,13 +190,13 @@ export default function AdminSellerListPage() {
           </Dialog>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {sellers.length === 0 ? (
           <p>No sellers found.</p>
         ) : (
           sellers.map((seller) => (
             <Card key={seller.id}>
-              <CardContent className="px-4 space-y-1">
+              <CardContent className="space-y-1 px-4">
                 <div className="font-medium">
                   {seller.name} (@{seller.userName})
                 </div>
@@ -210,6 +211,9 @@ export default function AdminSellerListPage() {
                 </div>
                 <div className="text-sm font-semibold">
                   Monthly Claimed: {seller.monthlyClaims}
+                </div>
+                <div className="text-sm font-semibold">
+                  Last Month Claimed: {seller.lastMonthClaims}
                 </div>
                 <div className="text-sm text-gray-500">
                   Total Claims: {seller._count.claims} · Requests:{" "}

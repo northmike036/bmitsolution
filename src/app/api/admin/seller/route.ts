@@ -15,6 +15,9 @@ export async function GET() {
     const monthStart = new Date(today);
     monthStart.setDate(1); // first day of this month
 
+    const lastMonthStart = new Date(monthStart);
+    lastMonthStart.setMonth(lastMonthStart.getMonth() - 1); // first day of last month
+
     const sellers = await prisma.user.findMany({
       where: { type: "seller" },
       orderBy: { createdAt: "desc" },
@@ -52,6 +55,10 @@ export async function GET() {
         (c) => c.claimedAt >= monthStart
       ).length;
 
+      const lastMonthClaims = seller.claims.filter(
+        (c) => c.claimedAt >= lastMonthStart && c.claimedAt < monthStart
+      ).length;
+
       return {
         id: seller.id,
         name: seller.name,
@@ -61,6 +68,7 @@ export async function GET() {
         yesterdayClaims,
         weeklyClaims,
         monthlyClaims,
+        lastMonthClaims,
         _count: {
           claims: seller._count.claims,
           requestLogs: seller._count.requestLogs,
