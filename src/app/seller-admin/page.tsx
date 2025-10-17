@@ -34,7 +34,7 @@ type Seller = {
   };
 };
 
-export default function AdminSellerListPage() {
+export default function SellerAdminListPage() {
   const [sellers, setSellers] = useState<Seller[]>([]);
   const [loading, setLoading] = useState(true);
   const [limitDialogOpen, setLimitDialogOpen] = useState(false);
@@ -213,7 +213,7 @@ export default function AdminSellerListPage() {
                   {format(new Date(seller.createdAt), "MMM d, yyyy")}
                 </div>
                 <div className="flex justify-end">
-                  <Link href={`/admin/users/seller/${seller.userName}`}>
+                  <Link href={`/seller-admin/${seller.userName}`}>
                     <Button className="cursor-pointer bg-blue-500 hover:bg-blue-700">
                       View Profile
                     </Button>

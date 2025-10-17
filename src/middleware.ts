@@ -20,11 +20,20 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/poster", req.url));
     if (role === "seller")
       return NextResponse.redirect(new URL("/seller", req.url));
+    if (role === "sellerAdmin")
+      return NextResponse.redirect(new URL("/seller-admin", req.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/", "/admin/:path*", "/poster/:path*", "/seller/:path*", "/login"],
+  matcher: [
+    "/",
+    "/admin/:path*",
+    "/poster/:path*",
+    "/seller/:path*",
+    "/seller-admin/:path*",
+    "/login",
+  ],
 };

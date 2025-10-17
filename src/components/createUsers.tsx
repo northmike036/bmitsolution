@@ -9,7 +9,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -67,9 +67,11 @@ export default function AdminCreateUser() {
   };
 
   return (
-    <Card className="max-w-md mx-auto mt-10">
+    <Card className="mx-auto mt-10 max-w-md">
       <CardContent>
-        <h2 className="text-2xl font-semibold mb-6 text-center">Create New User</h2>
+        <h2 className="mb-6 text-center text-2xl font-semibold">
+          Create New User
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
             placeholder="Name"
@@ -100,10 +102,15 @@ export default function AdminCreateUser() {
             <SelectContent>
               <SelectItem value="poster">Poster</SelectItem>
               <SelectItem value="seller">Seller</SelectItem>
+              <SelectItem value="sellerAdmin">Seller Admin</SelectItem>
             </SelectContent>
           </Select>
 
-          <Button type="submit" className="w-full cursor-pointer bg-gray-700 text-white" disabled={loading}>
+          <Button
+            type="submit"
+            className="w-full cursor-pointer bg-gray-700 text-white"
+            disabled={loading}
+          >
             {loading ? "Creating..." : "Create User"}
           </Button>
         </form>

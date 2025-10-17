@@ -19,18 +19,18 @@ export async function POST(req: Request) {
     if (!name || !userName || !password || !type) {
       return NextResponse.json(
         { error: "All fields are required." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const allowedTypes = ["poster", "seller", "root"] as const;
+    const allowedTypes = ["poster", "seller", "sellerAdmin", "root"] as const;
     type UserType = (typeof allowedTypes)[number];
 
     // Validate type
     if (!allowedTypes.includes(type)) {
       return NextResponse.json(
         { error: "Invalid user type." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
     if (existingUser) {
       return NextResponse.json(
         { error: "Username already exists." },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -65,13 +65,13 @@ export async function POST(req: Request) {
     }
     return NextResponse.json(
       { message: "User created successfully", user },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("[CREATE_USER_ERROR]", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

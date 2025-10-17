@@ -11,6 +11,7 @@ datasource db {
 enum UserType {
   poster
   seller
+  sellerAdmin
   root
 }
 
