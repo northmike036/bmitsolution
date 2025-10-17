@@ -6,7 +6,7 @@ declare module "next-auth" {
       id: string;
       name: string;
       userName: string;
-      type: "poster" | "seller" | "root";
+      type: "poster" | "seller" | "sellerAdmin" | "root";
     };
   }
 
@@ -14,13 +14,13 @@ declare module "next-auth" {
     id: string;
     name: string;
     userName: string;
-    type: "poster" | "seller" | "root";
+    type: "poster" | "seller" | "sellerAdmin" | "root";
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     id: string;
-    type: "poster" | "seller" | "root";
+    type: "poster" | "seller" | "sellerAdmin" | "root";
   }
 }

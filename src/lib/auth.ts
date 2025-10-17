@@ -28,7 +28,7 @@ export const authOptions: AuthOptions = {
 
         const isValid = await bcrypt.compare(
           credentials.password,
-          user.password
+          user.password,
         );
         if (!isValid) return null;
 
@@ -52,7 +52,11 @@ export const authOptions: AuthOptions = {
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id as string;
-        session.user.type = token.type as "poster" | "seller" | "root";
+        session.user.type = token.type as
+          | "poster"
+          | "seller"
+          | "root"
+          | "sellerAdmin";
       }
       return session;
     },
