@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Logout from "@/components/ui/logout";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default async function SellerAdminLayout({
   children,
@@ -16,6 +17,9 @@ export default async function SellerAdminLayout({
           </h1>
         </Link>
         <div className="flex items-center space-x-2">
+          <Link href="/seller-admin/summary">
+            <Button className="cursor-pointer">Summary</Button>
+          </Link>
           <Logout className="cursor-pointer" />
         </div>
       </header>
