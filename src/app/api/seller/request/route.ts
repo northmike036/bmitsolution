@@ -13,6 +13,15 @@ export async function POST() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const user = await prisma.user.findUnique({
+    where: {
+      id: sellerId,
+    },
+  });
+
+  if (!user?.isActive) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   const limit = await prisma.sellerLimit.findUnique({
     where: { sellerId },
   });
@@ -20,7 +29,7 @@ export async function POST() {
   if (!limit) {
     return NextResponse.json(
       { error: "No limit profile set for seller" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
