@@ -30,18 +30,6 @@ export async function POST(req: Request) {
         { status: 400 },
       );
     }
-    // agentName: "",
-    // location: "",
-    // rent: "",
-    // screenshot: "",
-    // Validate phone number format (e.g., +1 555-123-4567)
-    // const phoneRegex = /^\+?[0-9\s\-()]{7,20}$/;
-    // if (!phoneRegex.test(phoneNumber)) {
-    //   return NextResponse.json(
-    //     { error: "Invalid phone number format." },
-    //     { status: 400 }
-    //   );
-    // }
 
     const parsed = parsePhoneNumber(phoneNumber, "US");
     if (!parsed?.isValid()) {

@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { DisplayMessage } from "@/components/admin/displayMessage";
 import { CopyButton } from "@/components/copyBtn";
+import Link from "next/link";
 
 type Pagination = {
   page: number;
@@ -235,6 +236,11 @@ const AdminTrash = () => {
                   type="Deleted Reason"
                   message={selectedPost?.reason}
                 />
+                <div className="pt-2">
+                  <Link href={`/poster/leads/inbox/${selectedPost?.post.id}`}>
+                    <Button className="cursor-pointer">Update Lead</Button>
+                  </Link>
+                </div>
               </div>
             </DialogContent>
           </Dialog>
