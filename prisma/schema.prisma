@@ -39,13 +39,14 @@ model SellerQueue {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String
-  userName  String   @unique
-  password  String
-  isActive  Boolean  @default(true)
-  type      UserType
-  createdAt DateTime @default(now())
+  id             String   @id @default(cuid())
+  name           String
+  userName       String   @unique
+  password       String
+  sessionVersion Int      @default(1)
+  isActive       Boolean  @default(true)
+  type           UserType
+  createdAt      DateTime @default(now())
 
   posts        Post[]             @relation("PosterPosts")
   claims       Claim[]            @relation("SellerClaims")
