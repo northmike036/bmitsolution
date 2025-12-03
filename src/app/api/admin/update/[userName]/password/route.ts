@@ -16,7 +16,7 @@ export async function POST(req: Request, { params }: { params: tParams }) {
 
   await prisma.user.update({
     where: { userName },
-    data: { password: hashed },
+    data: { password: hashed, sessionVersion: { increment: 1 } },
   });
 
   return NextResponse.json({ success: true });

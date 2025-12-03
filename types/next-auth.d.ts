@@ -7,6 +7,7 @@ declare module "next-auth" {
       name: string;
       userName: string;
       type: "poster" | "seller" | "sellerAdmin" | "root";
+      sessionVersion: number;
     };
   }
 
@@ -15,6 +16,7 @@ declare module "next-auth" {
     name: string;
     userName: string;
     type: "poster" | "seller" | "sellerAdmin" | "root";
+    sessionVersion: number;
   }
 }
 
@@ -22,5 +24,6 @@ declare module "next-auth/jwt" {
   interface JWT {
     id: string;
     type: "poster" | "seller" | "sellerAdmin" | "root";
+    sessionVersion: number;
   }
 }
