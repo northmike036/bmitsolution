@@ -5,6 +5,7 @@ import PosterNotification from "@/components/notification/posterNotification";
 import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
+import { ClientSessionWatcher } from "@/components/ClientSessionWatcher";
 
 export default async function PosterLayout({
   children,
@@ -32,6 +33,7 @@ export default async function PosterLayout({
         </div>
       </header>
       <main className="flex-1">{children}</main>
+      <ClientSessionWatcher interval={60000} />
     </div>
   );
 }

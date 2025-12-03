@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Logout from "@/components/ui/logout";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ClientSessionWatcher } from "@/components/ClientSessionWatcher";
 
 export default async function SellerAdminLayout({
   children,
@@ -24,6 +25,7 @@ export default async function SellerAdminLayout({
         </div>
       </header>
       <main className="flex-1">{children}</main>
+      <ClientSessionWatcher interval={60000} />
     </div>
   );
 }

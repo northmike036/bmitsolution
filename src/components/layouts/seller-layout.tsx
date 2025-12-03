@@ -4,6 +4,7 @@ import Logout from "../ui/logout";
 import SellerNotification from "../notification/sellerNotification";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { ClientSessionWatcher } from "../ClientSessionWatcher";
 
 const navLinks = [
   { name: "Dashboard", href: "/seller" },
@@ -17,12 +18,12 @@ export default async function SellerLayout({
 }) {
   const session = await getServerSession(authOptions);
   return (
-    <div className="min-h-screen flex bg-gray-100 text-black">
+    <div className="flex min-h-screen bg-gray-100 text-black">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md p-4 space-y-4 flex flex-col justify-between min-h-screen">
+      <aside className="flex min-h-screen w-64 flex-col justify-between space-y-4 bg-white p-4 shadow-md">
         <div>
-          <h1 className="text-2xl font-bold text-center mb-6">Seller Panel</h1>
-          <nav className="space-y-2 flex flex-col justify-center items-center">
+          <h1 className="mb-6 text-center text-2xl font-bold">Seller Panel</h1>
+          <nav className="flex flex-col items-center justify-center space-y-2">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -37,8 +38,8 @@ export default async function SellerLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 px-6 py-3 overflow-y-auto">
-        <div className="flex justify-end items-center space-x-2 mb-2">
+      <main className="flex-1 overflow-y-auto px-6 py-3">
+        <div className="mb-2 flex items-center justify-end space-x-2">
           <SellerNotification userId={session?.user.id} />
           <div>
             <Logout className="cursor-pointer" />
@@ -46,6 +47,7 @@ export default async function SellerLayout({
         </div>
         {children}
       </main>
+      <ClientSessionWatcher interval={60000} />
     </div>
   );
 }
