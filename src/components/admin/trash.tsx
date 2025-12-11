@@ -37,6 +37,7 @@ type postType = {
   location: string;
   rent: string;
   screenshot: string;
+  postType: string;
   poster: posterType;
 };
 
@@ -198,10 +199,23 @@ const AdminTrash = () => {
                   <p className="text-sm font-medium text-gray-500">Location</p>
                   <p className="text-lg">{selectedPost?.post.location}</p>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">Rent</p>
-                  <p className="text-lg">{selectedPost?.post.rent}</p>
+                <div className="flex justify-between gap-2">
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">Rent</p>
+                    <p className="text-lg">{selectedPost?.post.rent}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Post Type
+                    </p>
+                    <p className="text-lg">
+                      {selectedPost?.post.postType === "fb"
+                        ? "Facebook"
+                        : "Craigslist"}
+                    </p>
+                  </div>
                 </div>
+
                 <div>
                   <p className="text-sm font-medium text-gray-500">
                     Screenshot

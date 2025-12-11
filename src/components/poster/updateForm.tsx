@@ -5,6 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function UpdateForm({
   phoneNumber,
@@ -15,6 +22,7 @@ export default function UpdateForm({
   rent,
   screenshot,
   id,
+  postType,
 }: {
   phoneNumber: string;
   message: string;
@@ -24,6 +32,7 @@ export default function UpdateForm({
   rent: string;
   screenshot: string;
   id: string;
+  postType: string;
 }) {
   const { toast } = useToast();
   const [form, setForm] = useState({
@@ -34,6 +43,7 @@ export default function UpdateForm({
     location,
     rent,
     screenshot,
+    postType,
   });
   const [loading, setLoading] = useState(false);
 
@@ -55,6 +65,7 @@ export default function UpdateForm({
           location: form.location.trim(),
           rent: form.rent.trim(),
           screenshot: form.screenshot.trim(),
+          postType: form.postType.trim(),
           postId: id,
         }),
       });
@@ -78,6 +89,7 @@ export default function UpdateForm({
         location: "",
         rent: "",
         screenshot: "",
+        postType: "",
       });
     } catch (error: any) {
       toast({
@@ -101,6 +113,18 @@ export default function UpdateForm({
           onChange={(e) => setForm({ ...form, clientName: e.target.value })}
           required
         />
+        <Select
+          value={form.postType}
+          onValueChange={(value) => setForm({ ...form, postType: value })}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select Post Type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="fb">Facebook (FB)</SelectItem>
+            <SelectItem value="cl">Craigslist (CL)</SelectItem>
+          </SelectContent>
+        </Select>
         <Input
           type="text"
           placeholder="Agent Name"

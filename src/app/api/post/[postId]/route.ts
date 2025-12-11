@@ -22,6 +22,7 @@ export async function PUT(req: NextRequest) {
       rent,
       screenshot,
       postId,
+      postType,
     } = body;
 
     const founded = await prisma.post.findUnique({
@@ -38,6 +39,7 @@ export async function PUT(req: NextRequest) {
         location: true,
         rent: true,
         screenshot: true,
+        postType: true,
         new: true,
         deleted: true,
         deletions: true,
@@ -46,6 +48,9 @@ export async function PUT(req: NextRequest) {
     });
 
     if (founded?.claim && founded?.deleted) {
+      await prisma.postDeletion.deleteMany({
+        where: { postId },
+      });
       const updatedPost = await prisma.post.update({
         where: { id: postId },
         data: {
@@ -56,6 +61,7 @@ export async function PUT(req: NextRequest) {
           ...(location !== undefined && { location }),
           ...(rent !== undefined && { rent }),
           ...(screenshot !== undefined && { screenshot }),
+          ...(postType !== undefined && { postType }),
           deleted: false,
         },
       });
@@ -84,6 +90,7 @@ export async function PUT(req: NextRequest) {
           ...(location !== undefined && { location }),
           ...(rent !== undefined && { rent }),
           ...(screenshot !== undefined && { screenshot }),
+          ...(postType !== undefined && { postType }),
         },
       });
 

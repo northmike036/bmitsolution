@@ -46,6 +46,7 @@ export async function GET(req: Request) {
             location: true,
             rent: true,
             screenshot: true,
+            postType: true,
             createdAt: true,
             new: true,
             poster: {
@@ -73,6 +74,7 @@ export async function GET(req: Request) {
       location: claim.post.location,
       rent: claim.post.rent,
       screenshot: claim.post.screenshot,
+      postType: claim.post.postType,
       claimedAt: claim.claimedAt,
       new: claim.post.new,
     }));

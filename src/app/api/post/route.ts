@@ -21,6 +21,7 @@ export async function POST(req: Request) {
       location,
       rent,
       screenshot,
+      postType,
     } = await req.json();
 
     // Validate inputs
@@ -62,6 +63,7 @@ export async function POST(req: Request) {
         location,
         rent,
         screenshot,
+        postType,
       },
     });
 

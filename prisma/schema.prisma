@@ -15,6 +15,11 @@ enum UserType {
   root
 }
 
+enum PostType {
+  fb
+  cl
+}
+
 enum RequestStatus {
   success
   queued
@@ -72,6 +77,7 @@ model Post {
   claimed    Boolean  @default(false)
   new        Boolean  @default(true)
   deleted    Boolean  @default(false)
+  postType   PostType
 
   poster    User           @relation("PosterPosts", fields: [posterId], references: [id])
   claim     Claim?

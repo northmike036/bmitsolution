@@ -47,6 +47,7 @@ export async function GET(req: Request) {
             phone: true,
             message: true,
             clientName: true,
+            postType: true,
             poster: {
               select: {
                 id: true,

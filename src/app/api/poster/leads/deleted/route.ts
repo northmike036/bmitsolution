@@ -49,6 +49,7 @@ export async function GET(req: Request) {
               location: true,
               rent: true,
               screenshot: true,
+              postType: true,
               poster: {
                 select: {
                   id: true,

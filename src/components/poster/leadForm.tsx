@@ -6,6 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function LeadForm() {
   const { toast } = useToast();
@@ -17,8 +24,10 @@ export default function LeadForm() {
     location: "",
     rent: "",
     screenshot: "",
+    postType: "",
   });
   const [loading, setLoading] = useState(false);
+  console.log(form);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +41,7 @@ export default function LeadForm() {
         },
         body: JSON.stringify({
           phoneNumber: form.phoneNumber.trim(),
+          postType: form.postType.trim(),
           message: form.message.trim(),
           clientName: form.clientName.trim(),
           agentName: form.agentName.trim(),
@@ -60,6 +70,7 @@ export default function LeadForm() {
         location: "",
         rent: "",
         screenshot: "",
+        postType: "",
       });
     } catch (error: any) {
       toast({
@@ -85,6 +96,18 @@ export default function LeadForm() {
           onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
           required
         />
+        <Select
+          value={form.postType}
+          onValueChange={(value) => setForm({ ...form, postType: value })}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select Post Type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="fb">Facebook (FB)</SelectItem>
+            <SelectItem value="cl">Craigslist (CL)</SelectItem>
+          </SelectContent>
+        </Select>
         <Input
           type="text"
           placeholder="Client Name"

@@ -37,6 +37,7 @@ export async function GET(req: Request) {
         location: true,
         rent: true,
         screenshot: true,
+        postType: true,
         clientName: true,
         createdAt: true,
       },

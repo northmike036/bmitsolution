@@ -29,7 +29,7 @@ type posterType = {
   userName: string;
 };
 
-type postType = {
+type PostType = {
   id: string;
   phone: string;
   message: string;
@@ -39,6 +39,7 @@ type postType = {
   screenshot: string;
   clientName: string;
   poster: posterType;
+  postType: string;
 };
 
 type sellerType = {
@@ -52,7 +53,7 @@ type Post = {
   reason: string;
   createdAt: string;
   seller: sellerType;
-  post: postType;
+  post: PostType;
 };
 
 const AdminTrash = () => {
@@ -199,10 +200,23 @@ const AdminTrash = () => {
                   <p className="text-sm font-medium text-gray-500">Location</p>
                   <p className="text-lg">{selectedPost?.post.location}</p>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">Rent</p>
-                  <p className="text-lg">{selectedPost?.post.rent}</p>
+                <div className="flex justify-between gap-2">
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">Rent</p>
+                    <p className="text-lg">{selectedPost?.post.rent}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Post Type
+                    </p>
+                    <p className="text-lg">
+                      {selectedPost?.post.postType === "fb"
+                        ? "Facebook"
+                        : "Craigslist"}
+                    </p>
+                  </div>
                 </div>
+
                 <div>
                   <p className="text-sm font-medium text-gray-500">
                     Screenshot

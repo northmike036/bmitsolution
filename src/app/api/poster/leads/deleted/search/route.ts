@@ -50,6 +50,7 @@ export async function GET(req: Request) {
             message: true,
             location: true,
             screenshot: true,
+            postType: true,
             rent: true,
             poster: {
               select: {

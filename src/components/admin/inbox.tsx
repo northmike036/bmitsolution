@@ -32,6 +32,7 @@ type Post = {
   agentName: string;
   location: string;
   rent: string;
+  postType: string;
   screenshot: string;
   claimedAt: string;
   createdAt: string;
@@ -215,10 +216,23 @@ const AdminInbox = () => {
                   <p className="text-sm font-medium text-gray-500">Location</p>
                   <p className="text-lg">{selectedPost?.location}</p>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">rent</p>
-                  <p className="text-lg">{selectedPost?.rent}</p>
+                <div className="flex justify-between gap-2">
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">Rent</p>
+                    <p className="text-lg">{selectedPost?.rent}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Post Type
+                    </p>
+                    <p className="text-lg">
+                      {selectedPost?.postType === "fb"
+                        ? "Facebook"
+                        : "Craigslist"}
+                    </p>
+                  </div>
                 </div>
+
                 <div>
                   <p className="text-sm font-medium text-gray-500">
                     Screenshot

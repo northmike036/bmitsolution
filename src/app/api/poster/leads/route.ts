@@ -45,6 +45,7 @@ export async function GET(req: Request) {
         rent: true,
         screenshot: true,
         new: true,
+        postType: true,
       },
     });
 

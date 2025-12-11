@@ -27,6 +27,7 @@ type Post = {
   createdAt: string;
   claimedAt: string;
   poster: string;
+  postType: string;
   new: boolean;
 };
 
@@ -175,10 +176,18 @@ const page = () => {
                     <p className="text-lg">{selectedPost?.agentName}</p>
                   </div>
                 </div>
-
                 <div>
                   <p className="text-sm font-medium text-gray-500">Location</p>
                   <p className="text-lg">{selectedPost?.location}</p>
+                </div>
+
+                <div>
+                  <p className="text-sm font-medium text-gray-500">Post Type</p>
+                  <p className="text-lg">
+                    {selectedPost?.postType === "fb"
+                      ? "Facebook"
+                      : "Craigslist"}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-500">Rent</p>

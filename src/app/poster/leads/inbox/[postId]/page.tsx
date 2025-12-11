@@ -21,6 +21,7 @@ const page = async ({ params }: { params: Promise<PageProps> }) => {
       location={lead.location}
       rent={lead.rent}
       screenshot={lead.screenshot}
+      postType={lead.postType}
       id={postId}
     />
   );
