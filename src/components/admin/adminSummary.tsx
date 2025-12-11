@@ -34,7 +34,11 @@ function StatCard({
   );
 }
 
-export default function AdminSummary({ children }: { children: ReactNode }) {
+export default function AnalyticContainer({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [summary, setSummary] = useState({

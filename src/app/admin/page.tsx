@@ -2,8 +2,9 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import AnalyticContainer from "@/components/admin/AdminSummary";
 import AnalyticsDashboard from "@/components/admin/AdminSummaryV2";
-import AdminSummary from "@/components/admin/AdminSummary";
+
 export default async function AdminPage() {
   const session = await getServerSession(authOptions);
   if (!session || session.user.type !== "root") {
@@ -11,8 +12,8 @@ export default async function AdminPage() {
   }
 
   return (
-    <AdminSummary>
+    <AnalyticContainer>
       <AnalyticsDashboard />
-    </AdminSummary>
+    </AnalyticContainer>
   );
 }
