@@ -35,7 +35,7 @@ interface RangeSectionProps {
   data: Metric[];
 }
 
-export default function AnalyticsDashboard() {
+export default function AnalyticsInside() {
   const [customDate, setCustomDate] = useState<CalendarRange | null>(null);
   const [activeTab, setActiveTab] = useState("daily");
   const [data, setData] = useState<AnalyticsResponse | null>(null);
