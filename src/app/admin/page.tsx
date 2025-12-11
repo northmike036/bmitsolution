@@ -2,8 +2,8 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import AnalyticContainer from "@/components/admin/AdminSummary";
 import AnalyticsDashboard from "@/components/admin/AdminSummaryV2";
+import AnalyticWrapper from "@/components/admin/AdminAnalyticsWrapper";
 
 export default async function AdminPage() {
   const session = await getServerSession(authOptions);
@@ -12,8 +12,8 @@ export default async function AdminPage() {
   }
 
   return (
-    <AnalyticContainer>
+    <AnalyticWrapper>
       <AnalyticsDashboard />
-    </AnalyticContainer>
+    </AnalyticWrapper>
   );
 }
