@@ -37,7 +37,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-md block w-full rounded-lg px-6 py-2 font-semibold text-gray-700 transition hover:bg-gray-200"
+                className="text-md block w-full rounded-lg px-6 py-2 font-semibold text-gray-900 transition hover:bg-gray-200"
               >
                 {link.name}
               </Link>
