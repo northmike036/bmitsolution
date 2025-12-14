@@ -33,6 +33,8 @@ export async function GET() {
     lastMonthPosts,
     totalCount,
     deletedLeads,
+    fbLeads,
+    clLeads,
   ] = await Promise.all([
     prisma.post.count({
       where: {
@@ -90,6 +92,20 @@ export async function GET() {
         deleted: true,
       },
     }),
+    prisma.post.count({
+      where: {
+        posterId: userId,
+        postType: "fb",
+        deleted: false,
+      },
+    }),
+    prisma.post.count({
+      where: {
+        posterId: userId,
+        postType: "cl",
+        deleted: false,
+      },
+    }),
   ]);
 
   return NextResponse.json({
@@ -100,5 +116,7 @@ export async function GET() {
     lastMonth: lastMonthPosts,
     total: totalCount,
     deletedLeads,
+    fbLeads,
+    clLeads,
   });
 }

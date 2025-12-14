@@ -11,6 +11,8 @@ type Summary = {
   lastMonth: number;
   total: number;
   deletedLeads: number;
+  fbLeads: number;
+  clLeads: number;
 };
 
 export default function PosterSummary() {
@@ -64,6 +66,16 @@ export default function PosterSummary() {
       <StatCard
         label="Deleted Leads"
         value={summary?.deletedLeads ?? 0}
+        loading={loading}
+      />
+      <StatCard
+        label="Facebook Leads"
+        value={summary?.fbLeads ?? 0}
+        loading={loading}
+      />
+      <StatCard
+        label="Craigslist Leads"
+        value={summary?.clLeads ?? 0}
         loading={loading}
       />
     </div>
