@@ -20,6 +20,7 @@ const navLinks = [
   { name: "Leads", href: "/admin/leads/inbox" },
   { name: "Announcement", href: "/admin/announcement" },
   { name: "Export Leads", href: "/admin/export" },
+  { name: "Change Password", href: "/admin/profile/change-password" },
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
