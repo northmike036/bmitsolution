@@ -85,7 +85,7 @@ export default function AnalyticWrapper({ children }: { children: ReactNode }) {
 
   return (
     <div className="space-y-6 p-6">
-      <div className="flex w-full items-center gap-4 overflow-x-auto p-2">
+      <div className="flex w-full items-center gap-4 overflow-x-auto py-2 md:p-2">
         <StatCard label="Total Users" value={summary.totalUsers}>
           <Users />
         </StatCard>

@@ -26,12 +26,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <div className="min-h-screen flex bg-gray-100 text-black">
+    <div className="flex min-h-screen bg-gray-100 text-black">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md p-4 space-y-4 hidden md:flex flex-col justify-between min-h-screen">
+      <aside className="hidden min-h-screen w-64 flex-col justify-between space-y-4 bg-white p-4 shadow-md md:flex">
         <div>
-          <h1 className="text-2xl font-bold text-center mb-6">Admin Panel</h1>
-          <nav className="space-y-2 flex flex-col justify-center items-center">
+          <h1 className="mb-6 text-center text-2xl font-bold">Admin Panel</h1>
+          <nav className="flex flex-col items-center justify-center space-y-2">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -46,8 +46,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 px-6 py-3 overflow-y-auto">
-        <div className="flex justify-end items-center space-x-2 mb-2">
+      <main className="flex-1 overflow-y-auto px-2 py-3 md:px-6">
+        <div className="mb-2 flex items-center justify-end space-x-2">
           <Link href="/admin/users/create">
             <button className="button-85" role="button">
               Create User

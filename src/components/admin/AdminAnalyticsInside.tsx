@@ -77,7 +77,7 @@ export default function AnalyticsInside() {
     : [];
 
   return (
-    <div className="flex w-full flex-col gap-6 p-6">
+    <div className="flex w-full flex-col gap-6 md:p-6">
       {/* ---------------------------- */}
       {/* MOBILE: Dropdown Tab Menu  */}
       {/* ---------------------------- */}
