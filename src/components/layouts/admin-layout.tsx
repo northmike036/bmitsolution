@@ -31,13 +31,13 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       {/* Sidebar */}
       <aside className="hidden min-h-screen w-64 flex-col justify-between space-y-4 bg-white p-4 shadow-md md:flex">
         <div>
-          <h1 className="mb-6 text-center text-2xl font-bold">Admin Panel</h1>
-          <nav className="flex flex-col items-center justify-center space-y-2">
+          <h1 className="mb-6 text-2xl font-bold">Admin Panel</h1>
+          <nav className="flex flex-col items-center justify-center">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-md font-semibold"
+                className="text-md block w-full rounded-lg px-6 py-2 font-semibold text-gray-700 transition hover:bg-gray-200"
               >
                 {link.name}
               </Link>
