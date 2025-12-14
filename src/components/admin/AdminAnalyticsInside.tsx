@@ -120,18 +120,20 @@ export default function AnalyticsInside() {
         {/* CUSTOM RANGE */}
         <TabsContent value="custom" className="mt-6">
           <div className="flex flex-col gap-6">
-            <Calendar
-              mode="range"
-              selected={customDate || undefined}
-              onSelect={(selected) => {
-                if (!selected || !selected.from) {
-                  setCustomDate(null);
-                } else {
-                  setCustomDate({ from: selected.from, to: selected.to });
-                }
-              }}
-              className="rounded-xl border p-3"
-            />
+            <div className="flex justify-center">
+              <Calendar
+                mode="range"
+                selected={customDate || undefined}
+                onSelect={(selected) => {
+                  if (!selected || !selected.from) {
+                    setCustomDate(null);
+                  } else {
+                    setCustomDate({ from: selected.from, to: selected.to });
+                  }
+                }}
+                className="rounded-xl border p-3"
+              />
+            </div>
 
             {customDate?.from ? (
               <RangeSection
@@ -143,7 +145,7 @@ export default function AnalyticsInside() {
                 data={metrics}
               />
             ) : (
-              <p className="text-gray-600">
+              <p className="text-center text-gray-600">
                 Select a date or range to view insights.
               </p>
             )}
@@ -157,7 +159,7 @@ export default function AnalyticsInside() {
 function RangeSection({ title, data }: RangeSectionProps) {
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-semibold">{title}</h2>
+      <h2 className="text-center text-xl font-semibold">{title}</h2>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
         {data.length > 0 ? (
