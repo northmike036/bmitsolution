@@ -1,64 +1,105 @@
-// app/api/admin/delete-user/route.ts
-import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma"; // adjust if your prisma client is elsewhere
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
-export async function DELETE(req: NextRequest) {
+export async function DELETE(req: Request) {
   try {
-    const body = await req.json();
-    const { userId } = body;
+    const session = await getServerSession(authOptions);
 
-    if (!userId) {
-      return NextResponse.json({ error: "Missing userId" }, { status: 400 });
+    // 1️⃣ Auth
+    if (!session || session.user.type !== "root") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Delete related claims===>
-    await prisma.claim.deleteMany({
-      where: {
-        sellerId: userId,
-      },
+    const { userId } = await req.json();
+
+    if (!userId) {
+      return NextResponse.json({ error: "User ID required" }, { status: 400 });
+    }
+
+    // 2️⃣ Prevent self-delete
+    if (session.user.id === userId) {
+      return NextResponse.json(
+        { error: "You cannot delete yourself" },
+        { status: 400 },
+      );
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { type: true },
     });
 
-    // Delete posts created by the user (if they are a poster)
-    await prisma.post.deleteMany({
-      where: {
-        posterId: userId,
-      },
-    });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
 
-    // Delete seller queues
-    await prisma.sellerQueue.deleteMany({
-      where: {
-        sellerId: userId,
-      },
-    });
+    // 3️⃣ HARD DELETE TRANSACTION
+    await prisma.$transaction(async (tx) => {
+      // ───── Team leader protection ─────
+      const leadsTeam = await tx.posterTeam.findFirst({
+        where: { leaderId: userId },
+      });
 
-    // Delete seller limit profile
-    await prisma.sellerLimit.deleteMany({
-      where: {
-        sellerId: userId,
-      },
-    });
+      if (leadsTeam) {
+        throw new Error("USER_IS_TEAM_LEADER");
+      }
 
-    // Delete seller request logs
-    await prisma.sellerRequestLog.deleteMany({
-      where: {
-        sellerId: userId,
-      },
-    });
+      // ───────── SELLER CLEANUP ─────────
+      if (user.type === "seller") {
+        await tx.claim.deleteMany({ where: { sellerId: userId } });
+        await tx.sellerQueue.deleteMany({ where: { sellerId: userId } });
+        await tx.sellerLimit.deleteMany({ where: { sellerId: userId } });
+        await tx.sellerRequestLog.deleteMany({ where: { sellerId: userId } });
+      }
 
-    // Finally, delete the user
-    await prisma.user.delete({
-      where: {
-        id: userId,
-      },
+      // ───────── POSTER CLEANUP ─────────
+      if (user.type === "poster") {
+        // Delete post deletions linked to posts first
+        await tx.postDeletion.deleteMany({
+          where: {
+            post: { posterId: userId },
+          },
+        });
+
+        // Delete claims on poster posts
+        await tx.claim.deleteMany({
+          where: {
+            post: { posterId: userId },
+          },
+        });
+
+        // Delete posts
+        await tx.post.deleteMany({
+          where: { posterId: userId },
+        });
+      }
+
+      // ───────── COMMON CLEANUP ─────────
+      await tx.notification.deleteMany({ where: { userId } });
+      await tx.postDeletion.deleteMany({ where: { sellerId: userId } });
+
+      // ───────── FINALLY DELETE USER ─────────
+      await tx.user.delete({
+        where: { id: userId },
+      });
     });
 
     return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("User deletion failed:", error);
+  } catch (error: any) {
+    console.error("HARD DELETE USER ERROR:", error);
+
+    if (error.message === "USER_IS_TEAM_LEADER") {
+      return NextResponse.json(
+        { error: "User is a team leader. Reassign or delete team first." },
+        { status: 400 },
+      );
+    }
+
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
+      { error: "Failed to hard delete user" },
+      { status: 500 },
     );
   }
 }
