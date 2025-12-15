@@ -38,13 +38,14 @@ export async function DELETE(req: Request) {
     // 3️⃣ HARD DELETE TRANSACTION
     await prisma.$transaction(async (tx) => {
       // ───── Team leader protection ─────
-      const leadsTeam = await tx.posterTeam.findFirst({
-        where: { leaderId: userId },
-      });
 
-      if (leadsTeam) {
-        throw new Error("USER_IS_TEAM_LEADER");
-      }
+      // const leadsTeam = await tx.posterTeam.findFirst({
+      //   where: { leaderId: userId },
+      // });
+
+      // if (leadsTeam) {
+      //   throw new Error("USER_IS_TEAM_LEADER");
+      // }
 
       // ───────── SELLER CLEANUP ─────────
       if (user.type === "seller") {
