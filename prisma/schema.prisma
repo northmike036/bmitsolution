@@ -53,7 +53,14 @@ model User {
   type           UserType
   createdAt      DateTime @default(now())
 
-  posts        Post[]             @relation("PosterPosts")
+  posts  Post[]      @relation("PosterPosts")
+  // poster → team
+  teamId String?
+  team   PosterTeam? @relation(fields: [teamId], references: [id])
+
+  // leading teams (normally 1)
+  leadingTeams PosterTeam[] @relation("TeamLeader")
+
   claims       Claim[]            @relation("SellerClaims")
   limitProfile SellerLimit?       @relation("UserLimit")
   requestLogs  SellerRequestLog[] @relation("UserLogs")
@@ -61,6 +68,20 @@ model User {
   sellerQueues  SellerQueue[]
   postDeletions PostDeletion[]
   notifications Notification[] @relation("UserNotifications")
+}
+
+model PosterTeam {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // required leader
+  leaderId String @unique
+  leader   User   @relation("TeamLeader", fields: [leaderId], references: [id])
+
+  // posters in the team
+  members User[]
 }
 
 model Post {

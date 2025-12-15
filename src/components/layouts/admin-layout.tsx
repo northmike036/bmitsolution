@@ -17,6 +17,7 @@ const navLinks = [
   { name: "Dashboard", href: "/admin" },
   { name: "Poster List", href: "/admin/users/poster" },
   { name: "Seller List", href: "/admin/users/seller" },
+  { name: "Teams", href: "/admin/teams" },
   { name: "Leads", href: "/admin/leads/inbox" },
   { name: "Announcement", href: "/admin/announcement" },
   { name: "Export Leads", href: "/admin/export" },
