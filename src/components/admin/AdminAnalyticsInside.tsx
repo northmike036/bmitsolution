@@ -40,7 +40,14 @@ export default function AnalyticsInside() {
   const [activeTab, setActiveTab] = useState("daily");
   const [data, setData] = useState<AnalyticsResponse | null>(null);
 
-  const tabs = ["daily", "weekly", "monthly", "lastMonth", "custom"];
+  const tabs = [
+    "daily",
+    "yesterday",
+    "weekly",
+    "monthly",
+    "lastMonth",
+    "custom",
+  ];
 
   const fetchData = async (range: string, from?: string, to?: string) => {
     const params = new URLSearchParams();
@@ -100,7 +107,7 @@ export default function AnalyticsInside() {
       {/* DESKTOP: Original Grid Tabs */}
       {/* ---------------------------- */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="bg-muted hidden grid-cols-5 gap-2 rounded-xl p-2 md:grid">
+        <TabsList className="bg-muted hidden grid-cols-6 gap-2 rounded-xl md:grid">
           {tabs.map((tab) => (
             <TabsTrigger key={tab} value={tab}>
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -108,14 +115,16 @@ export default function AnalyticsInside() {
           ))}
         </TabsList>
 
-        {["daily", "weekly", "monthly", "lastMonth"].map((range) => (
-          <TabsContent key={range} value={range} className="mt-6">
-            <RangeSection
-              title={`${range.charAt(0).toUpperCase() + range.slice(1)} Insights`}
-              data={metrics}
-            />
-          </TabsContent>
-        ))}
+        {["daily", "yesterday", "weekly", "monthly", "lastMonth"].map(
+          (range) => (
+            <TabsContent key={range} value={range} className="mt-6">
+              <RangeSection
+                title={`${range.charAt(0).toUpperCase() + range.slice(1)} Insights`}
+                data={metrics}
+              />
+            </TabsContent>
+          ),
+        )}
 
         {/* CUSTOM RANGE */}
         <TabsContent value="custom" className="mt-6">
