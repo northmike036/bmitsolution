@@ -36,6 +36,11 @@ const AdminLeadsWrapper = async ({ children }: { children: ReactNode }) => {
             />
           </Link>
         </div>
+        <div>
+          <Link href="/admin/leads/purge">
+            <InboxNavButton type="Purge" path="/admin/leads/purge" amount={0} />
+          </Link>
+        </div>
       </div>
       {children}
     </div>
